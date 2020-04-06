@@ -3,5 +3,6 @@ type updatedAnswer @entity {
   current: BigInt!
   answerId: BigInt!
   contract: Bytes!
+  timestamp: Int!
 }
 

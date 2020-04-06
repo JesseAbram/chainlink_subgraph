@@ -68,4 +68,13 @@ export class updatedAnswer extends Entity {
   set contract(value: Bytes) {
     this.set("contract", Value.fromBytes(value));
   }
+
+  get timestamp(): i32 {
+    let value = this.get("timestamp");
+    return value.toI32();
+  }
+
+  set timestamp(value: i32) {
+    this.set("timestamp", Value.fromI32(value));
+  }
 }
