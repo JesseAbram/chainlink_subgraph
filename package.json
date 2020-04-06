@@ -1,0 +1,24 @@
+{
+  "name": "futureswap",
+  "version": "0.1.0",
+  "repository": "https://github.com/futureswap/fs_graph",
+  "license": "MIT",
+  "scripts": {
+    "create": "graph create jesseabram/Chainlink-Aggregators --debug --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create Chainlink-Aggregators --node http://127.0.0.1:8020",
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "auth": "graph auth https://api.thegraph.com/deploy/ ",
+    "deploy": "graph deploy jesseabram/Chainlink-Aggregators --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-local": "graph deploy example --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.17.1",
+    "@graphprotocol/graph-ts": "^0.17.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "keytar": "^5.4.0"
+  }
+}
