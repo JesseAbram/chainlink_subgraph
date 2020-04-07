@@ -5,7 +5,7 @@ export function handleAnswerUpdated(event: AnswerUpdated): void {
   let id = event.address.toHexString().concat("-").concat(event.params.answerId.toString())
   let updated = new updatedAnswer(id)
   updated.current = event.params.current
-  updated.answerId = event.params.answerId
+  updated.answerId = event.params.answerId.toI32(),
   updated.contract = event.address
   updated.timestamp = event.block.timestamp.toI32(),
 
