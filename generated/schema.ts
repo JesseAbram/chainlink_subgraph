@@ -51,13 +51,13 @@ export class updatedAnswer extends Entity {
     this.set("current", Value.fromBigInt(value));
   }
 
-  get answerId(): i32 {
-    let value = this.get("answerId");
+  get roundId(): i32 {
+    let value = this.get("roundId");
     return value.toI32();
   }
 
-  set answerId(value: i32) {
-    this.set("answerId", Value.fromI32(value));
+  set roundId(value: i32) {
+    this.set("roundId", Value.fromI32(value));
   }
 
   get contract(): Bytes {

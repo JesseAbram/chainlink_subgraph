@@ -1,7 +1,7 @@
 type updatedAnswer @entity {
   id: ID!
   current: BigInt!
-  answerId: Int!
+  roundId: Int!
   contract: Bytes!
   timestamp: Int!
 }
