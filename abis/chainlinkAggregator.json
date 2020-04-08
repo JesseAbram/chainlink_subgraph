@@ -62,6 +62,20 @@
   {
     "constant": true,
     "inputs": [],
+    "name": "latestAnswer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "minimumResponses",
     "outputs": [
       {
@@ -113,7 +127,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "latestCompletedAnswer",
+    "name": "latestRound",
     "outputs": [
       {
         "name": "",
@@ -180,11 +194,11 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "currentAnswer",
+    "name": "latestTimestamp",
     "outputs": [
       {
         "name": "",
-        "type": "int256"
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -208,6 +222,44 @@
       {
         "name": "",
         "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_roundId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAnswer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_roundId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTimestamp",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -270,20 +322,6 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "updatedHeight",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "name": "_link",
@@ -330,23 +368,6 @@
       }
     ],
     "name": "ResponseReceived",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "current",
-        "type": "int256"
-      },
-      {
-        "indexed": true,
-        "name": "answerId",
-        "type": "uint256"
-      }
-    ],
-    "name": "AnswerUpdated",
     "type": "event"
   },
   {
@@ -412,6 +433,45 @@
       }
     ],
     "name": "ChainlinkCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "current",
+        "type": "int256"
+      },
+      {
+        "indexed": true,
+        "name": "roundId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "AnswerUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "roundId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "name": "startedBy",
+        "type": "address"
+      }
+    ],
+    "name": "NewRound",
     "type": "event"
   }
 ]

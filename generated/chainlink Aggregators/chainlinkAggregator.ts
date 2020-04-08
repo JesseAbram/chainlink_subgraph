@@ -41,28 +41,6 @@ export class ResponseReceived__Params {
   }
 }
 
-export class AnswerUpdated extends EthereumEvent {
-  get params(): AnswerUpdated__Params {
-    return new AnswerUpdated__Params(this);
-  }
-}
-
-export class AnswerUpdated__Params {
-  _event: AnswerUpdated;
-
-  constructor(event: AnswerUpdated) {
-    this._event = event;
-  }
-
-  get current(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get answerId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
 export class OwnershipRenounced extends EthereumEvent {
   get params(): OwnershipRenounced__Params {
     return new OwnershipRenounced__Params(this);
@@ -157,6 +135,54 @@ export class ChainlinkCancelled__Params {
   }
 }
 
+export class AnswerUpdated extends EthereumEvent {
+  get params(): AnswerUpdated__Params {
+    return new AnswerUpdated__Params(this);
+  }
+}
+
+export class AnswerUpdated__Params {
+  _event: AnswerUpdated;
+
+  constructor(event: AnswerUpdated) {
+    this._event = event;
+  }
+
+  get current(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get roundId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get timestamp(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class NewRound extends EthereumEvent {
+  get params(): NewRound__Params {
+    return new NewRound__Params(this);
+  }
+}
+
+export class NewRound__Params {
+  _event: NewRound;
+
+  constructor(event: NewRound) {
+    this._event = event;
+  }
+
+  get roundId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get startedBy(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
 export class chainlinkAggregator extends SmartContract {
   static bind(address: Address): chainlinkAggregator {
     return new chainlinkAggregator("chainlinkAggregator", address);
@@ -200,6 +226,21 @@ export class chainlinkAggregator extends SmartContract {
     return CallResult.fromValue(value[0].toBytes());
   }
 
+  latestAnswer(): BigInt {
+    let result = super.call("latestAnswer", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_latestAnswer(): CallResult<BigInt> {
+    let result = super.tryCall("latestAnswer", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
+  }
+
   minimumResponses(): BigInt {
     let result = super.call("minimumResponses", []);
 
@@ -234,14 +275,14 @@ export class chainlinkAggregator extends SmartContract {
     return CallResult.fromValue(value[0].toAddress());
   }
 
-  latestCompletedAnswer(): BigInt {
-    let result = super.call("latestCompletedAnswer", []);
+  latestRound(): BigInt {
+    let result = super.call("latestRound", []);
 
     return result[0].toBigInt();
   }
 
-  try_latestCompletedAnswer(): CallResult<BigInt> {
-    let result = super.tryCall("latestCompletedAnswer", []);
+  try_latestRound(): CallResult<BigInt> {
+    let result = super.tryCall("latestRound", []);
     if (result.reverted) {
       return new CallResult();
     }
@@ -249,14 +290,14 @@ export class chainlinkAggregator extends SmartContract {
     return CallResult.fromValue(value[0].toBigInt());
   }
 
-  currentAnswer(): BigInt {
-    let result = super.call("currentAnswer", []);
+  latestTimestamp(): BigInt {
+    let result = super.call("latestTimestamp", []);
 
     return result[0].toBigInt();
   }
 
-  try_currentAnswer(): CallResult<BigInt> {
-    let result = super.tryCall("currentAnswer", []);
+  try_latestTimestamp(): CallResult<BigInt> {
+    let result = super.tryCall("latestTimestamp", []);
     if (result.reverted) {
       return new CallResult();
     }
@@ -279,6 +320,44 @@ export class chainlinkAggregator extends SmartContract {
     return CallResult.fromValue(value[0].toAddress());
   }
 
+  getAnswer(_roundId: BigInt): BigInt {
+    let result = super.call("getAnswer", [
+      EthereumValue.fromUnsignedBigInt(_roundId)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_getAnswer(_roundId: BigInt): CallResult<BigInt> {
+    let result = super.tryCall("getAnswer", [
+      EthereumValue.fromUnsignedBigInt(_roundId)
+    ]);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getTimestamp(_roundId: BigInt): BigInt {
+    let result = super.call("getTimestamp", [
+      EthereumValue.fromUnsignedBigInt(_roundId)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_getTimestamp(_roundId: BigInt): CallResult<BigInt> {
+    let result = super.tryCall("getTimestamp", [
+      EthereumValue.fromUnsignedBigInt(_roundId)
+    ]);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
+  }
+
   paymentAmount(): BigInt {
     let result = super.call("paymentAmount", []);
 
@@ -287,21 +366,6 @@ export class chainlinkAggregator extends SmartContract {
 
   try_paymentAmount(): CallResult<BigInt> {
     let result = super.tryCall("paymentAmount", []);
-    if (result.reverted) {
-      return new CallResult();
-    }
-    let value = result.value;
-    return CallResult.fromValue(value[0].toBigInt());
-  }
-
-  updatedHeight(): BigInt {
-    let result = super.call("updatedHeight", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_updatedHeight(): CallResult<BigInt> {
-    let result = super.tryCall("updatedHeight", []);
     if (result.reverted) {
       return new CallResult();
     }
