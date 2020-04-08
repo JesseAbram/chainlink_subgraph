@@ -9,7 +9,8 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "auth": "graph auth https://api.thegraph.com/deploy/ ",
-    "deploy": "graph deploy jesseabram/Chainlink-Aggregators --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-mainnet": "graph deploy jesseabram/Chainlink-Aggregators --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-rinkeby": "graph deploy jesseabram/Rinkeby-Chainlink-Aggregators --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-local": "graph deploy example --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {

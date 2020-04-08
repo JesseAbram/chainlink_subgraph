@@ -6,10 +6,10 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: chainlink Aggregators
-    network: mainnet
+    network: rinkeby
     source:
       abi: chainlinkAggregator
-      startBlock: 7853433
+      startBlock: 5276172
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -20,6 +20,6 @@ dataSources:
         - name: chainlinkAggregator
           file: chainlink Aggregators/abis/chainlinkAggregator.json
       eventHandlers:
-        - event: AnswerUpdated(indexed int256,indexed uint256)
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
           handler: handleAnswerUpdated
       file: chainlink Aggregators/chainlink Aggregators.wasm
